@@ -1,0 +1,37 @@
+{
+  "name": "evaclient",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "lint": "eslint .",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@babel/parser": "^7.26.7",
+    "@babel/standalone": "^7.26.7",
+    "@babel/traverse": "^7.26.7",
+    "@monaco-editor/react": "^4.6.0",
+    "monaco-editor": "^0.52.2",
+    "monaco-jsx-highlighter": "^2.77.77",
+    "monaco-jsx-syntax-highlight": "^1.2.0",
+    "react": "18.3.1.0",
+    "react-dom": "18.3.1",
+    "sucrase": "^3.35.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "9.18.0",
+    "@types/react": "18.3.18",
+    "@types/react-dom": "18.3.5",
+    "@vitejs/plugin-react": "^4.3.4",
+    "eslint": "9.18.0",
+    "eslint-plugin-react-hooks": "^5.0.0",
+    "eslint-plugin-react-refresh": "0.4.18",
+    "globals": "^15.14.0",
+    "typescript": "5.7.3",
+    "typescript-eslint": "^8.18.2",
+    "vite": "^6.0.5"
+  }
+}
