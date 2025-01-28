@@ -120,15 +120,13 @@ const EditorMonaco = () =>
   {
     if (isResizing)
     {
-      document.addEventListener('mousemove', handleMouseMove); // Начинаем отслеживать движение мыши
-      document.addEventListener('mouseup', handleMouseUp); // Прекращаем изменение при отпускании кнопки
+      document.addEventListener('mousemove', handleMouseMove);
+      document.addEventListener('mouseup', handleMouseUp);
     } else
     {
-      document.removeEventListener('mousemove', handleMouseMove); // Убираем обработчик, если не перетаскиваем
-      document.removeEventListener('mouseup', handleMouseUp); // Убираем обработчик наmouseup
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseup', handleMouseUp);
     }
-
-    // Очистка при размонтировании компонента
     return () =>
     {
       document.removeEventListener('mousemove', handleMouseMove);
