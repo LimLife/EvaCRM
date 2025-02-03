@@ -1,6 +1,16 @@
 import React, { useCallback, useEffect, useState, Suspense } from "react";
 import Editor, { Monaco } from "@monaco-editor/react";
 import * as monacoType from "monaco-editor";
+import ReactDOM from 'react-dom';
+
+import { LeftPanel, Container, ResizeHandle, RightPanel } from "./EditorStyle"
+const urlPackage = import.meta.env.VITE_URL_PACKAGE;
+const urlModule = import.meta.env.VITE_URL_MODULE;
+window.React = React;
+window.ReactDOM = ReactDOM;
+
+
+
 const tsCompilerOptions = {
   jsx: monacoType.languages.typescript.JsxEmit.React,
   moduleResolution: monacoType.languages.typescript.ModuleResolutionKind.NodeJs,
@@ -38,12 +48,11 @@ const tsDiagnosticsOptions = {
   noSyntaxValidation: false,
   noSuggestionDiagnostics: false
 }
-
 const addExtraLibFromPackage = async (monaco: Monaco, packageName: string, fileName: string) =>
 {
   try
   {
-    const response = await fetch(`http://localhost:5152/Worker/npm?package=${packageName}`, { method: "GET" });
+    const response = await fetch(urlPackage + packageName, { method: "GET" });
     if (!response.ok)
     {
       throw new Error(`Failed to fetch ${packageName}`);
@@ -60,53 +69,28 @@ const defaultEditorValue = 'import React from' + "'react';" + '\n' + "import * a
 
 const EditorMonaco = () =>
 {
-  const TestCode = "const Test = () => { function Ex() { console.log('Hello world'); } useEffect(() => { }, []); Ex(); return (React.createElement(React.Fragment, null, 'Hello World!!!')); };"
   const [Component, setComponent] = useState<React.FC>();
-
-
   useEffect(() =>
   {
-    const executeComponent = (componentString: string, exportName: string, dependencies: Record<string, unknown> = {}): React.FC =>
+    import(urlModule + "moduleA").then((module: Module) =>
     {
-      const exports = {};
-      const module = { exports };
-
-      const allDependencies = { React, ...dependencies };
-
-      const dependencyNames = Object.keys(allDependencies).join(', ');
-      const dependencyValues = Object.values(allDependencies);
-
-      const code = `
-      ${componentString}
-      if (typeof ${exportName} !== 'undefined') {
-        module.exports = ${exportName};
-      } else if (typeof exports.default !== 'undefined') {
-        module.exports = exports.default;
-      } else {
-        throw new Error('Export not found');
-      }`;
-
-      new Function('exports', 'module', dependencyNames, code)(
-        exports,
-        module,
-        ...dependencyValues
-      );
-
-      return module.exports as React.FC;
-    };
-    const component = executeComponent(TestCode, "Test", { React, useEffect });
-    setComponent(() => component);
-  }, [TestCode]);
+      const ImportComponent = module.default;
+      setComponent(() => ImportComponent)
+    }).catch((error) =>
+    {
+      console.error('Failed to load module:', error);
+    });
+  }, [Component]);
 
   const [width, setWidth] = useState<number>(960);
   const [isResizing, setIsResizing] = useState(false);
 
-  const handleMouseDown = (e: React.MouseEvent) =>
+  const handleMouseDown = (e) =>
   {
     setIsResizing(true);
     document.body.style.cursor = 'ew-resize';
   };
-  const handleMouseMove = useCallback((e: React.MouseEvent) =>
+  const handleMouseMove = useCallback((e: MouseEvent) =>
   {
     if (isResizing)
     {
@@ -150,66 +134,33 @@ const EditorMonaco = () =>
     await addExtraLibFromPackage(monaco, "react", "index.d.ts");
   };
   return (
-    <>
-      <div
-        style={{
-          display: 'flex',
-          width: '100%',
-          height: '100vh'
-        }}
-      >
-        <div
-          style={{
-            width: `${width}px`,
-            height: '100%',
-            padding: '10px',
-            borderRight: '1px solid #ccc'
+    <Container>
+      <LeftPanel width={width}>
+        <Editor
+          height="90vh"
+          width={width}
+          theme="vs-dark"
+          language="typescript"
+          path={'file:///index.tsx'}
+          options={{
+            automaticLayout: true,
+            minimap: { enabled: true },
+            hover: { enabled: true },
+            links: true,
           }}
-        >
-          <Editor
-            height="90vh"
-            width={width}
-            theme="vs-dark"
-            language="typescript"
-            path={'file:///index.tsx'}
-            options={{
-              automaticLayout: true,
-              minimap: { enabled: true },
-              hover: { enabled: true },
-              links: true
-            }}
-            value={defaultEditorValue}
-            onMount={handleEditorMount}
-          />
-        </div>
-        <div id="resize"
-          onMouseDown={handleMouseDown}
-          style={{
-            position: 'absolute',
-            left: `${width}px`,
-            cursor: 'ew-resize',
-            width: '5px',
-            marginLeft: '29px',
-            height: '100%',
-            backgroundColor: '##c3dced',
-          }}
+          value={defaultEditorValue}
+          onMount={handleEditorMount}
         />
-        <div
-          style={{
-            width: `calc(100% - ${width}px)`,
-            flex: 1,
-            padding: '10px',
-            borderLeft: '1px solid #ccc'
-          }}
-        >
-          <div >
-            <Suspense fallback={<div>Loading .... </div>}>
-              {Component && <Component />}
-            </Suspense>
-          </div>
+      </LeftPanel>
+      <ResizeHandle width={width} onMouseDown={handleMouseDown} />
+      <RightPanel width={width}>
+        <div>
+          <Suspense fallback={<div>Loading .... </div>}>
+            {Component && <Component />}
+          </Suspense>
         </div>
-      </div>
-    </>
+      </RightPanel>
+    </Container>
   );
 };
 

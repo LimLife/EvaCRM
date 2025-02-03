@@ -1,10 +1,10 @@
-import { FC,ReactNode} from "react"
+import { FC, ReactNode } from "react"
 
 
-const MainContainer: FC<{children:ReactNode}> = ({ children }) =>
+const MainContainer: FC<{ children: ReactNode }> = ({ children }) =>
 {
     return (<>
-        { children}
+        {children}
     </>)
 }
 
