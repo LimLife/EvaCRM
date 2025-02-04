@@ -85,7 +85,7 @@ const EditorMonaco = () =>
   const [width, setWidth] = useState<number>(960);
   const [isResizing, setIsResizing] = useState(false);
 
-  const handleMouseDown = (e) =>
+  const handleMouseDown = () =>
   {
     setIsResizing(true);
     document.body.style.cursor = 'ew-resize';
@@ -134,7 +134,7 @@ const EditorMonaco = () =>
     await addExtraLibFromPackage(monaco, "react", "index.d.ts");
   };
   return (
-    <Container>
+    <Container overrideStyles={{ position: "absolute" }} id="container">
       <LeftPanel width={width}>
         <Editor
           height="90vh"
@@ -152,11 +152,12 @@ const EditorMonaco = () =>
           onMount={handleEditorMount}
         />
       </LeftPanel>
-      <ResizeHandle width={width} onMouseDown={handleMouseDown} />
+      <ResizeHandle id="resize-panel" width={width} onMouseDown={handleMouseDown} />
       <RightPanel width={width}>
         <div>
           <Suspense fallback={<div>Loading .... </div>}>
             {Component && <Component />}
+            {"Any content"}
           </Suspense>
         </div>
       </RightPanel>

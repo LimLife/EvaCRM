@@ -1,48 +1,139 @@
-import styled from 'styled-components';
+import styled, { css, CSSProperties } from 'styled-components';
 
-
-interface PanelProps {
-  width: number;
+interface IContainer extends IOverrideProps
+{
+    nameComponent?: string;
 }
+const baseContainerStyles: IContainer = {
+    display: 'flex',
+    width: '100%',
+    height: '100vh',
+    backgroundColor: '#f0f0f0',
+};
 
-interface ResizeHandleProps {
-  width: number;
-  onMouseDown: (e: React.MouseEvent) => void;
+const Container = styled.div<IContainer>((props) =>
+{
+    let styles: CSSProperties = { ...baseContainerStyles };
+
+    if (props.overrideStyles)
+    {
+        if (typeof props.overrideStyles === 'function')
+        {
+            styles = props.overrideStyles(styles);
+        } else
+        {
+            styles = { ...styles, ...props.overrideStyles };
+        }
+    }
+    return css({ ...styles });
+});
+
+
+interface ILeftPanel extends IOverrideProps
+{
+    nameComponent?: string;
 }
+const basePanelStyles: ILeftPanel = {
+    width: 0,
+    height: '100%',
+    padding: '10px'
+};
 
 
-const Container = styled.div`
-  display: flex;
-  width: 100%;
-  height: 100vh;
-`;
+const LeftPanel = styled.div<ILeftPanel>((props) =>
+{
+    let styles: CSSProperties = { ...basePanelStyles };
+
+    if (props.overrideStyles)
+    {
+        if (typeof props.overrideStyles === 'function')
+        {
+            styles = props.overrideStyles(styles);
+        } else
+        {
+            styles = { ...styles, ...props.overrideStyles };
+        }
+    }
+
+    return css({ ...styles });
+});
 
 
-const LeftPanel = styled.div<PanelProps>`
-  width: ${({ width }) => `${width}px`};
-  height: 100%;
-  padding: 10px;
-  border-right: 1px solid #ccc;
-`;
+interface IResizeHandleStyles extends IOverrideProps
+{
+    nameComponent?: string;
+
+    onMouseDown?: (e: React.MouseEvent) => void;
+};
+const baseResizePanelStyles: IResizeHandleStyles = {
+    position: 'absolute',
+    cursor: 'ew-resize',
+    width: '5px',
+    height: '100%',
+    backgroundColor: '#c3dced',
+    marginLeft: "20px",
+};
 
 
-const RightPanel = styled.div<PanelProps>`
-  width: ${({ width }) => `calc(100% - ${width}px)`};
-  flex: 1;
-  padding: 10px;
-  border-left: 1px solid #ccc;
-`;
+
+const ResizeHandle = styled.div<IResizeHandleStyles>((props) =>
+{
+    let styles: CSSProperties = { ...baseResizePanelStyles };
+
+    if (props.width)
+    {
+        styles.left = `${props.width}px`;
+    }
+
+    if (props.overrideStyles)
+    {
+        if (typeof props.overrideStyles === 'function')
+        {
+            styles = props.overrideStyles(styles);
+        } else
+        {
+            styles = { ...styles, ...props.overrideStyles };
+        }
+    }
+
+    return css({ ...styles });
+});
 
 
-const ResizeHandle = styled.div<ResizeHandleProps>`
-  position: absolute;
-  left: ${({ width }) => `${width}px`};
-  cursor: ew-resize;
-  width: 5px;
-  margin-left: 29px;
-  height: 100%;
-  background-color: #c3dced;
-`;
+interface IRightPanelStyles extends IOverrideProps
+{
+    nameCopComponent?: string;
+}
+const baseRightPanel: IRightPanelStyles = {
+    flex: 1,
+    padding: '10px',
+    borderLeft: '1px solid #ccc',
+    width: "100%",
+    position: 'absolute',
+    left: "960px",
+    marginLeft: "20px"
+};
 
+const RightPanel = styled.div<IRightPanelStyles>((props) =>
+{
+    let styles: CSSProperties = { ...baseRightPanel };
+    if (props.width)
+    {
+        styles.left = `${props.width}px`;
+        console.log(styles.left, props.width);
+    }
+    if (props.overrideStyles)
+    {
+        if (typeof props.overrideStyles === 'function')
+        {
+            styles = props.overrideStyles(styles);
+        } else
+        {
+            styles = { ...styles, ...props.overrideStyles };
+        }
+    }
 
-export {Container, LeftPanel, RightPanel, ResizeHandle};
+    return css({ ...styles });
+});
+
+export { Container, LeftPanel, RightPanel, ResizeHandle };
