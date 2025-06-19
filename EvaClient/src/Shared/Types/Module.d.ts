@@ -1,9 +1,9 @@
 
-declare global  {
-    interface Module
-    {
-      //inject: string[];
-      default: React.FC;
-    }
+declare global
+{
+  interface Module
+  {
+    default: React.FC;
+  }
 }
 export { };

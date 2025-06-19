@@ -1,4 +1,4 @@
-import EditorMonaco from "./Components/EditorMonaco"
+import EditorMonaco from "./editor-monaco/EditorMonaco"
 
 function App()
 {
