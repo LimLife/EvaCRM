@@ -1,10 +1,17 @@
-import EditorMonaco from "./editor-monaco/EditorMonaco"
+import { Link } from "react-router-dom";
+import AppRoutes from './routes/AppRoutes.tsx';
 
 function App()
 {
   return (
     <>
-      <EditorMonaco />
+      <nav>
+        <Link to='/editor-monaco'>Editor</Link>
+        <Link to='/'>Main</Link>
+      </nav>
+      <main>
+        <AppRoutes />
+      </main>
     </>
   )
 }

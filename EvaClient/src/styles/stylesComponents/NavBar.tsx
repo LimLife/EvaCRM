@@ -13,7 +13,7 @@ const baseNavBar: CSSObject = {
     flexDirection: 'row',
 };
 
-const NavBar = styled.div<INavBarStyles>`
+const NavBar = styled.nav<INavBarStyles>`
 ${({ overrideStyles }) =>
     {
         const merged = useStyledOverrides(baseNavBar, overrideStyles);
