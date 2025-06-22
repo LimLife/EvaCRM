@@ -1,15 +1,14 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-import { viteExternalsPlugin } from 'vite-plugin-externals';
+import Page from "vite-plugin-pages";
 
-// https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(),
-    /*
-  viteExternalsPlugin({
-    react: 'React', 
-    'react-dom': 'ReactDOM', 
-  }),
-  */
-],
+  plugins: [
+    react(),
+    Page({
+      dirs: "src/pages",
+      extensions: ["tsx"],
+      routeStyle: 'next'
+    })
+  ],
 })
