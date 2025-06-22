@@ -7,7 +7,7 @@ export const compileModule = async (code: string): Promise<React.FC> =>
     const response = await fetch(`${compile}/compile`, {
         method: "GET",
         headers: {
-            "Content-Type": "text/applications"
+            "Content-Type": "text/javascript"
         },
         body: JSON.stringify({
             code: code
