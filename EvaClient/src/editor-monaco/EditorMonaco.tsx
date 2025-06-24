@@ -1,3 +1,5 @@
+/* eslint-disable react/no-inline-styles */
+
 import * as monacoType from "monaco-editor";
 import * as CO from "./ts-options.ts/compilerOptions";
 import React, { useState, Suspense, useRef } from "react";

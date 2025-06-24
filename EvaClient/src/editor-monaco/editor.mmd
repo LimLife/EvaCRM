@@ -1,0 +1,55 @@
+---
+   title: Compiler Monaco
+---
+classDiagram 
+
+    Editor-Monaco --|> loadExtraLib: Monaco
+   class Editor-Monaco {
+        CompilerCode : application/javascript
+        RenderCompilerCode : jsx
+        LoaderType : addExtraLib()
+   }
+
+    loadExtraLib o--Loader : LoadObject
+    loadExtraLib --o Loader : PackageName
+    class loadExtraLib{
+        declarerPackage()
+        registerTypeDefinition()
+    }
+    loadExtraLib --|> registerTypeDefinition : LoadObject
+    class registerTypeDefinition{
+        addExtraLib()
+        createModel()
+        updateCompiler()
+    }
+    Loader <..LoadObject
+
+    registerTypeDefinition --|> AddExtraLib : PathContent
+    class AddExtraLib{
+        path
+        content
+    }
+     registerTypeDefinition --|> CreateModel: LanguageValue
+    class CreateModel{
+        value
+        language
+        uri
+    }
+     registerTypeDefinition --|> UpdateCompiler
+    class UpdateCompiler{
+        type
+        path
+    }
+   class Loader {
+        LoadTypeFromServer():LoadObject
+   }
+   class LoadObject{
+        DataDeclarer: string
+        PathFolder: string
+        NickName: string
+   }
+
+   Editor-Monaco <--|>loadCompileCode
+    class loadCompileCode {
+        compileModule(code:string):application/javascript
+    }

@@ -1,7 +1,7 @@
 {
   "name": "evaclient",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.0.1",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -15,12 +15,13 @@
     "@babel/traverse": "^7.26.7",
     "@monaco-editor/react": "^4.6.0",
     "monaco-editor": "^0.52.2",
-    "monaco-jsx-highlighter": "^2.77.77",
-    "monaco-jsx-syntax-highlight": "^1.2.0",
     "react": "18.3.1.0",
     "react-dom": "18.3.1",
+    "react-redux": "^9.2.0",
+    "react-router-dom": "^7.6.2",
     "styled-components": "^6.1.14",
-    "sucrase": "^3.35.0"
+    "sucrase": "^3.35.0",
+    "zustand": "^5.0.5"
   },
   "devDependencies": {
     "@eslint/js": "9.18.0",
@@ -34,6 +35,7 @@
     "typescript": "5.7.3",
     "typescript-eslint": "^8.18.2",
     "vite": "^6.0.5",
-    "vite-plugin-externals": "^0.6.2"
+    "vite-plugin-externals": "^0.6.2",
+    "vite-plugin-pages": "^0.33.0"
   }
 }

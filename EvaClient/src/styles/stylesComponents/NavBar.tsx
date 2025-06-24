@@ -1,6 +1,6 @@
 import styled, { CSSObject } from "styled-components";
 import { IOverrideProps } from "../toolsStyle/type";
-import { useStyledOverrides } from "../useStyledOverrides";
+import { useMergedOverrideStyles } from "../useMergedOverrideStyles";
 
 
 interface INavBarStyles extends IOverrideProps
@@ -12,11 +12,11 @@ const baseNavBar: CSSObject = {
     display: 'flex',
     flexDirection: 'row',
 };
-
+export const NavBarStyle: Record<string, CSSObject> = { button: baseNavBar }
 const NavBar = styled.nav<INavBarStyles>`
-${({ overrideStyles }) =>
+${({ overrideStyles, nameComponent = "navBar" }) =>
     {
-        const merged = useStyledOverrides(baseNavBar, overrideStyles);
+        const merged = useMergedOverrideStyles(nameComponent, baseNavBar, overrideStyles);
         return merged;
     }}`;
 

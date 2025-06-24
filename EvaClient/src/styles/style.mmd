@@ -1,0 +1,32 @@
+classDiagram
+    direction TB
+    class component {
+        baseComponent: CSSObject
+        style : Record&lt;string, CSSObject&gt;
+    }
+
+    class componentStyle {
+        useMergedOverrideStyles()
+    }
+    class useStyledOverrides {
+        useMemo(): CSSObject
+    }
+
+    class applyOverrideStyles {
+        applyOverrideStyles(base, override?): CSSObject
+    }
+
+    class useServerOverride {
+        useContext(componentName): OverrideMap
+    }
+
+    class StyleOverrideProvider {
+        type OverrideMap = Record&lt;string, CSSObject&gt;
+        StyleOverrideProvider: JSX ( overrides: OverrideMap, children)
+    }
+
+    component --|> componentStyle
+    componentStyle --> useStyledOverrides
+    useStyledOverrides <|-- applyOverrideStyles
+    componentStyle --> useServerOverride
+    useServerOverride <--> StyleOverrideProvider

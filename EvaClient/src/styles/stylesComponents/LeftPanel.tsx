@@ -1,6 +1,6 @@
 import styled, { CSSObject } from "styled-components";
 import { IOverrideProps } from "../toolsStyle/type";
-import { useStyledOverrides } from "../useStyledOverrides";
+import { useMergedOverrideStyles } from "../useMergedOverrideStyles";
 
 interface ILeftPanel extends IOverrideProps
 {
@@ -10,11 +10,11 @@ const baseLeftPanel: CSSObject = {
     height: '100%',
 };
 
-
+export const LeftPanelStyle: Record<string, CSSObject> = { button: baseLeftPanel }
 const LeftPanel = styled.div<ILeftPanel>`
-${({ overrideStyles }) =>
+${({ overrideStyles, nameComponent = "leftPanel" }) =>
     {
-        const merged = useStyledOverrides(baseLeftPanel, overrideStyles);
+        const merged = useMergedOverrideStyles(nameComponent, baseLeftPanel, overrideStyles);
         return merged;
     }}`;
 

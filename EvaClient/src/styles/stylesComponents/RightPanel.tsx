@@ -1,6 +1,6 @@
 import styled, { CSSObject } from "styled-components";
 import { IOverrideProps } from "../toolsStyle/type";
-import { useStyledOverrides } from "../useStyledOverrides";
+import { useMergedOverrideStyles } from "../useMergedOverrideStyles";
 
 
 interface IRightPanelStyles extends IOverrideProps
@@ -13,11 +13,11 @@ const baseRightPanel: CSSObject = {
     position: 'absolute',
     marginLeft: "20px"
 };
-
+export const RightPanelStyle: Record<string, CSSObject> = { button: baseRightPanel }
 const RightPanel = styled.div<IRightPanelStyles>`
-${({ overrideStyles }) =>
+${({ overrideStyles, nameCopComponent = "rightPanel" }) =>
     {
-        const merged = useStyledOverrides(baseRightPanel, overrideStyles);
+        const merged = useMergedOverrideStyles(nameCopComponent, baseRightPanel, overrideStyles);
         return merged;
     }}`;
 

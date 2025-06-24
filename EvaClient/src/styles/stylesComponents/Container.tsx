@@ -1,6 +1,6 @@
 import styled, { CSSObject } from "styled-components";
-import { useStyledOverrides } from "../useStyledOverrides";
 import { IOverrideProps } from "../toolsStyle/type";
+import { useMergedOverrideStyles } from "../useMergedOverrideStyles";
 
 const baseContainerStyles: CSSObject = {
     display: 'flex',
@@ -12,11 +12,11 @@ export interface IContainerProps extends IOverrideProps
 {
     componentName?: string;
 }
-
+export const ContainerStyle: Record<string, CSSObject> = { button: baseContainerStyles }
 const Container = styled.div <IContainerProps>`
-${({ overrideStyles }) =>
+${({ overrideStyles, componentName = "container" }) =>
     {
-        const merged = useStyledOverrides(baseContainerStyles, overrideStyles);
+        const merged = useMergedOverrideStyles(componentName, baseContainerStyles, overrideStyles);
         return merged;
     }}`;
 
