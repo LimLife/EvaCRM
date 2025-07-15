@@ -1,6 +1,6 @@
 import styled, { CSSObject } from "styled-components";
 import { IOverrideProps } from "../toolsStyle/type";
-import { useMergedOverrideStyles } from "../useMergedOverrideStyles";
+import { useMergedOverrideStyles } from "../hooksStyle/useMergedOverrideStyles";
 
 interface IResizeHandleStyles extends IOverrideProps
 {
@@ -19,9 +19,9 @@ const baseResizePanelStyles: CSSObject = {
 export const ResizeHandleStyle: Record<string, CSSObject> = { button: baseResizePanelStyles }
 
 const ResizeHandle = styled.div<IResizeHandleStyles>`
-${({ overrideStyles, nameComponent = "resizeHandle" }) =>
+${({ $overrideStyles, nameComponent = "resizeHandle" }) =>
     {
-        const merged = useMergedOverrideStyles(nameComponent, baseResizePanelStyles, overrideStyles);
+        const merged = useMergedOverrideStyles(nameComponent, baseResizePanelStyles, $overrideStyles);
         return merged;
     }}`;
 

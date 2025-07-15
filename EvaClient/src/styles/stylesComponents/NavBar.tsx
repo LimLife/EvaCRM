@@ -1,6 +1,6 @@
 import styled, { CSSObject } from "styled-components";
 import { IOverrideProps } from "../toolsStyle/type";
-import { useMergedOverrideStyles } from "../useMergedOverrideStyles";
+import { useMergedOverrideStyles } from "../hooksStyle/useMergedOverrideStyles";
 
 
 interface INavBarStyles extends IOverrideProps
@@ -14,9 +14,9 @@ const baseNavBar: CSSObject = {
 };
 export const NavBarStyle: Record<string, CSSObject> = { button: baseNavBar }
 const NavBar = styled.nav<INavBarStyles>`
-${({ overrideStyles, nameComponent = "navBar" }) =>
+${({ $overrideStyles, nameComponent = "navBar" }) =>
     {
-        const merged = useMergedOverrideStyles(nameComponent, baseNavBar, overrideStyles);
+        const merged = useMergedOverrideStyles(nameComponent, baseNavBar, $overrideStyles);
         return merged;
     }}`;
 

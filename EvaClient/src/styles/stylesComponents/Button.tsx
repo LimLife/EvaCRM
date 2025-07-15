@@ -1,6 +1,6 @@
 import styled, { CSSObject } from "styled-components";
 import { IOverrideProps } from "../toolsStyle/type";
-import { useMergedOverrideStyles } from "../useMergedOverrideStyles";
+import { useMergedOverrideStyles } from "../hooksStyle/useMergedOverrideStyles";
 
 interface IButtonStyles extends IOverrideProps
 {
@@ -17,9 +17,9 @@ const baseButton: CSSObject = {
 };
 export const ButtonStyle: Record<string, CSSObject> = { button: baseButton }
 const Button = styled.button<IButtonStyles>`
-${({ overrideStyles, nameComponent = 'button' }) =>
+${({ $overrideStyles, nameComponent = 'button' }) =>
     {
-        const merged = useMergedOverrideStyles(nameComponent, baseButton, overrideStyles);
+        const merged = useMergedOverrideStyles(nameComponent, baseButton, $overrideStyles);
         return merged;
     }}`;
 
