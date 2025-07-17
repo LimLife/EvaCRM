@@ -1,22 +1,13 @@
-import styled, { CSSObject } from "styled-components";
-import { IOverrideProps } from "../../toolsStyle/type";
-import { useMergedOverrideStyles } from "../../hooksStyle/useMergedOverrideStyles";
+import { folderLabel } from './FolderLabel.css.ts';
+import React from 'react';
 
-const baseFolderLabelStyles: CSSObject = {
-    cursor: "pointer",
-    userSelect: "none",
-    fontWeight: 400
-};
-
-export interface IFolderLabelProps extends IOverrideProps
+export interface IFolderLabelProps extends React.HTMLAttributes<HTMLLabelElement>
 {
-    componentName?: string;
+    className?: string;
 }
-const FolderLabel = styled.div <IFolderLabelProps>`
-${({ $overrideStyles, componentName = "container" }) =>
-    {
-        const merged = useMergedOverrideStyles(componentName, baseFolderLabelStyles, $overrideStyles);
-        return merged;
-    }}`;
+
+const FolderLabel: React.FC<IFolderLabelProps> = ({ className = '', ...props }) => (
+    <label className={`${folderLabel} ${className}`} {...props} />
+);
 
 export default FolderLabel;

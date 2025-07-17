@@ -1,22 +1,13 @@
-import styled, { CSSObject } from "styled-components";
-import { IOverrideProps } from "../../toolsStyle/type";
-import { useMergedOverrideStyles } from "../../hooksStyle/useMergedOverrideStyles";
+import { fileLabel } from './FileLabel.css.ts';
+import React from 'react';
 
-const baseFileLabelStyles: CSSObject = {
-    cursor: "pointer",
-    userSelect: "none",
-    fontWeight: 400
-};
-
-export interface IFileLabelProps extends IOverrideProps
+export interface IFileLabelProps extends React.HTMLAttributes<HTMLLabelElement>
 {
-    componentName?: string;
+    className?: string;
 }
-const FileLabel = styled.div <IFileLabelProps>`
-${({ $overrideStyles, componentName = "container" }) =>
-    {
-        const merged = useMergedOverrideStyles(componentName, baseFileLabelStyles, $overrideStyles);
-        return merged;
-    }}`;
+
+const FileLabel: React.FC<IFileLabelProps> = ({ className = '', ...props }) => (
+    <label className={`${fileLabel} ${className}`} {...props} />
+);
 
 export default FileLabel;

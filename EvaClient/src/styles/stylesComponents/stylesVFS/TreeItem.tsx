@@ -1,20 +1,13 @@
-import styled, { CSSObject } from "styled-components";
-import { IOverrideProps } from "../../toolsStyle/type";
-import { useStyledOverrides } from "../../hooksStyle/useStyledOverrides";
+import { treeItem } from './TreeItem.css';
+import React from 'react';
 
-
-const baseTreeItemStyles: CSSObject = {
-    margin: "2px",
-};
-
-export interface ITreeItemProps extends IOverrideProps
+export interface ITreeItemProps extends React.HTMLAttributes<HTMLLIElement>
 {
-    componentName?: string;
+    className?: string;
 }
-const TreeItem = styled.ul <ITreeItemProps>`
-${({ $overrideStyles }) =>
-    {
-        return useStyledOverrides(baseTreeItemStyles, $overrideStyles);
-    }}`;
+
+const TreeItem: React.FC<ITreeItemProps> = ({ className = '', ...props }) => (
+    <li className={`${treeItem} ${className}`} {...props} />
+);
 
 export default TreeItem;

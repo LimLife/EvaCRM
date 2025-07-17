@@ -7,10 +7,13 @@ import Editor, { Monaco } from "@monaco-editor/react";
 import { addExtraLibFromPackage } from "./loadExtraLib";
 import { useResizable } from "../Shared/customHooks/Resizable/useResizable";
 import { template } from "./template";
-import * as UI from "../styles/UI";
+import { Container, NavBar, Button, LeftPanel, ResizeHandle, RightPanel } from "../styles/UI";
 import { compileModule } from "../utils/compileModule";
 ///TODO В компиляторе надо передать типы для переменных для path сделать файл и псевдонимы
 //А также сделать генератор файловой системы для модулей и сделать view дерево 
+import * as esbuild from "esbuild-wasm";
+
+//await esbuild.initialize({ wasmURL: "path/compile/esbuild.wasm" })
 
 const EditorMonaco: React.FC = () =>
 {
@@ -37,7 +40,7 @@ const EditorMonaco: React.FC = () =>
     monaco.languages.typescript.typescriptDefaults.setCompilerOptions(CO.tsCompilerOptions);
     monaco.languages.typescript.typescriptDefaults.setModeConfiguration(CO.tsModeConfiguration);
     monaco.languages.typescript.typescriptDefaults.setDiagnosticsOptions(CO.tsDiagnosticsOptions);
-    loadBaseLib(monaco);
+    // loadBaseLib(monaco);
   };
   const [Component, setComponent] = useState<React.FC>();
   const compiling = async () =>
@@ -50,11 +53,11 @@ const EditorMonaco: React.FC = () =>
   }
 
   return (
-    <UI.Container id="container">
-      <UI.NavBar id="nav-bar">
-        <UI.Button onClick={compiling} id="run-button">  Run ▶ </UI.Button>
-      </UI.NavBar>
-      <UI.LeftPanel overrideStyles={(base) => ({ ...base, width: width })}>
+    <Container id="container">
+      <NavBar id="nav-bar">
+        <Button onClick={compiling} id="run-button">  Run ▶ </Button>
+      </NavBar>
+      <LeftPanel style={{ width }}>
         <Editor
           height="100vh"
           width={width}
@@ -71,19 +74,17 @@ const EditorMonaco: React.FC = () =>
           value={template}
           onMount={handleEditorMount}
         />
-      </UI.LeftPanel>
-      <UI.ResizeHandle id="resize-panel"
-        overrideStyles={(base) => ({ ...base, left: width })}
-        onMouseDown={handleMouseDown}>
-      </UI.ResizeHandle>
-      <UI.RightPanel overrideStyles={(base) => ({ ...base, width: width })}>
+      </LeftPanel>
+      <ResizeHandle id="resize-panel" style={{ left: width }} onMouseDown={handleMouseDown}>
+      </ResizeHandle>
+      <RightPanel style={{ width }}>
         {
           <Suspense fallback={<div>Loading .... </div>}>
             {Component && <Component />}
             {"Any content"}
           </Suspense>}
-      </UI.RightPanel>
-    </UI.Container>
+      </RightPanel>
+    </Container>
   );
 };
 

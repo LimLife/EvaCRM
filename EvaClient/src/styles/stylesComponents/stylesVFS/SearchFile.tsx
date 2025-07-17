@@ -1,21 +1,13 @@
-import styled, { CSSObject } from "styled-components";
-import { IOverrideProps } from "../../toolsStyle/type";
-import { useStyledOverrides } from "../../hooksStyle/useStyledOverrides";
+import { searchFile } from './SearchFile.css';
+import React from 'react';
 
-const baseSearchFileStyles: CSSObject = {
-    display: 'grid',
-    gridTemplateColumns: '1fr 4fr',
-    alignItems: 'center'
-};
-
-export interface ISearchFileProps extends IOverrideProps
+export interface ISearchFileProps extends React.HTMLAttributes<HTMLDivElement>
 {
-    componentName?: string;
+    className?: string;
 }
-const SearchFile = styled.div <ISearchFileProps>`
-${({ $overrideStyles }) =>
-    {
-        return useStyledOverrides(baseSearchFileStyles, $overrideStyles);
-    }}`;
+
+const SearchFile: React.FC<ISearchFileProps> = ({ className = '', ...props }) => (
+    <div className={`${searchFile} ${className}`} {...props} />
+);
 
 export default SearchFile;

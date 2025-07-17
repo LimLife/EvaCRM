@@ -21,7 +21,7 @@ export default tseslint.config(
     plugins: {
       'react-hooks': reactHooks,
       'react-refresh': reactRefresh,
-      'react': reactPlugin
+      'react': reactPlugin,
     },
     rules: {
       ...reactHooks.configs.recommended.rules,
@@ -32,6 +32,7 @@ export default tseslint.config(
       "react/no-inline-styles": "error",
       'react/jsx-uses-react': 'error',
       'react/jsx-uses-vars': 'error',
+      "@typescript-eslint/no-unnecessary-type-assertion": "error"
     },
     settings: {
       react: {

@@ -1,21 +1,13 @@
-import styled, { CSSObject } from "styled-components";
-import { IOverrideProps } from "../../toolsStyle/type";
-import { useMergedOverrideStyles } from "../../hooksStyle/useMergedOverrideStyles";
+import { subFolders } from './SubFolders.css';
+import React from 'react';
 
-const baseSubFolderStyles: CSSObject = {
-    display: 'grid',
-    gridTemplateColumns: '3fr 1fr'
-};
-
-export interface ISubFoldersProps extends IOverrideProps
+export interface ISubFoldersProps extends React.HTMLAttributes<HTMLDivElement>
 {
-    componentName?: string;
+    className?: string;
 }
-const SubFolders = styled.div <ISubFoldersProps>`
-${({ $overrideStyles, componentName = "container" }) =>
-    {
-        const merged = useMergedOverrideStyles(componentName, baseSubFolderStyles, $overrideStyles);
-        return merged;
-    }}`;
+
+const SubFolders: React.FC<ISubFoldersProps> = ({ className = '', ...props }) => (
+    <div className={`${subFolders} ${className}`} {...props} />
+);
 
 export default SubFolders;

@@ -1,21 +1,13 @@
-import styled, { CSSObject } from "styled-components";
-import { IOverrideProps } from "../../toolsStyle/type";
-import { useMergedOverrideStyles } from "../../hooksStyle/useMergedOverrideStyles";
+import { folders } from './Folders.css.ts';
+import React from 'react';
 
-const baseFolderStyles: CSSObject = {
-    display: 'grid',
-    gridTemplateColumns: '1fr 9fr'
-};
-
-export interface IFoldersProps extends IOverrideProps
+export interface IFoldersProps extends React.HTMLAttributes<HTMLDivElement>
 {
-    componentName?: string;
+    className?: string;
 }
-const Folders = styled.div <IFoldersProps>`
-${({ $overrideStyles, componentName = "container" }) =>
-    {
-        const merged = useMergedOverrideStyles(componentName, baseFolderStyles, $overrideStyles);
-        return merged;
-    }}`;
+
+const Folders: React.FC<IFoldersProps> = ({ className = '', ...props }) => (
+    <div className={`${folders} ${className}`} {...props} />
+);
 
 export default Folders;

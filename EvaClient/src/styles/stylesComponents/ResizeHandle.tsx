@@ -1,28 +1,14 @@
-import styled, { CSSObject } from "styled-components";
-import { IOverrideProps } from "../toolsStyle/type";
-import { useMergedOverrideStyles } from "../hooksStyle/useMergedOverrideStyles";
+import { resizeHandle } from './ResizeHandle.css';
+import React from 'react';
 
-interface IResizeHandleStyles extends IOverrideProps
+interface IResizeHandleProps extends React.HTMLAttributes<HTMLDivElement>
 {
-    nameComponent?: string;
-
+    className?: string;
     onMouseDown?: (e: React.MouseEvent) => void;
-};
-const baseResizePanelStyles: CSSObject = {
-    position: 'absolute',
-    cursor: 'ew-resize',
-    height: '100%',
-    marginLeft: "21px",
-    border: "1px solid #000000",
-};
+}
 
-export const ResizeHandleStyle: Record<string, CSSObject> = { button: baseResizePanelStyles }
+const ResizeHandle: React.FC<IResizeHandleProps> = ({ className = '', ...props }) => (
+    <div className={`${resizeHandle} ${className}`} {...props} />
+);
 
-const ResizeHandle = styled.div<IResizeHandleStyles>`
-${({ $overrideStyles, nameComponent = "resizeHandle" }) =>
-    {
-        const merged = useMergedOverrideStyles(nameComponent, baseResizePanelStyles, $overrideStyles);
-        return merged;
-    }}`;
-
-export default ResizeHandle
+export default ResizeHandle;

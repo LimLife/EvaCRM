@@ -1,22 +1,13 @@
-import styled, { CSSObject } from "styled-components";
-import { IOverrideProps } from "../../toolsStyle/type";
-import { useMergedOverrideStyles } from "../../hooksStyle/useMergedOverrideStyles";
+import { ulTreeList } from './ULTreeList.css';
+import React from 'react';
 
-const baseULTreeListStyles: CSSObject = {
-    listStyle: 'none',
-    margin: 0,
-    padding: 0,
-};
-
-export interface IULTreeListProps extends IOverrideProps
+export interface IULTreeListProps extends React.HTMLAttributes<HTMLUListElement>
 {
-    componentName?: string;
+    className?: string;
 }
-const ULTreeList = styled.ul <IULTreeListProps>`
-${({ $overrideStyles, componentName = "container" }) =>
-    {
-        const merged = useMergedOverrideStyles(componentName, baseULTreeListStyles, $overrideStyles);
-        return merged;
-    }}`;
+
+const ULTreeList: React.FC<IULTreeListProps> = ({ className = '', ...props }) => (
+    <ul className={`${ulTreeList} ${className}`} {...props} />
+);
 
 export default ULTreeList;
