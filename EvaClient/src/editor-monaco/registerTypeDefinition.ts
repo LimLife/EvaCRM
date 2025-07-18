@@ -11,8 +11,16 @@ export async function registerTypeDefinition(monaco: Monaco, typeDeclarer: Decla
         monaco.editor.createModel(typeDeclarer.dataDeclarer, "typescript", uri);
     };
     const compileOptions = monaco.languages.typescript.typescriptDefaults.getCompilerOptions();
-    compileOptions.types?.push(...(compileOptions.types || []), typeDeclarer.nickName);
-    compileOptions.paths = { ...compileOptions.paths, [typeDeclarer.nickName]: [typeDeclarer.pathFolder] };
+    // Добавляем тип только если его ещё нет
+    if (!compileOptions.types?.includes(typeDeclarer.nickName))
+    {
+        compileOptions.types = [...(compileOptions.types || []), typeDeclarer.nickName];
+    }
+    // Добавляем путь только если его ещё нет
+    if (!compileOptions.paths || !compileOptions.paths[typeDeclarer.nickName])
+    {
+        compileOptions.paths = { ...compileOptions.paths, [typeDeclarer.nickName]: [typeDeclarer.pathFolder] };
+    }
     monaco.languages.typescript.typescriptDefaults.setCompilerOptions(compileOptions)
     // monaco.editor.getModel(uri)?.setValue(typeDeclarer.dataDeclarer);
 }
