@@ -2,15 +2,15 @@ import App from './App.tsx'
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom';
-import { StyleOverrideProvider } from "./styles/StyleOverrideContext.tsx";
-import { baseStylesRegistry } from "./styles/baseStylesRegistry.ts"
+import { VFSProvider } from "./vfs/vfsProvider.tsx"
+import "./styles/normalize.css";
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <BrowserRouter>
-      <StyleOverrideProvider overrides={baseStylesRegistry}>
+      <VFSProvider>
         <App />
-      </StyleOverrideProvider>
+      </VFSProvider>
     </BrowserRouter>
   </StrictMode>,
 )

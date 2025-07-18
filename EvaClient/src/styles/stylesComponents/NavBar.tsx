@@ -1,23 +1,13 @@
-import styled, { CSSObject } from "styled-components";
-import { IOverrideProps } from "../toolsStyle/type";
-import { useMergedOverrideStyles } from "../hooksStyle/useMergedOverrideStyles";
+import { navBar } from './NavBar.css';
+import React from 'react';
 
-
-interface INavBarStyles extends IOverrideProps
+interface INavBarProps extends React.HTMLAttributes<HTMLElement>
 {
-    nameComponent?: string;
+    className?: string;
 }
 
-const baseNavBar: CSSObject = {
-    display: 'flex',
-    flexDirection: 'row',
-};
-export const NavBarStyle: Record<string, CSSObject> = { button: baseNavBar }
-const NavBar = styled.nav<INavBarStyles>`
-${({ $overrideStyles, nameComponent = "navBar" }) =>
-    {
-        const merged = useMergedOverrideStyles(nameComponent, baseNavBar, $overrideStyles);
-        return merged;
-    }}`;
+const NavBar: React.FC<INavBarProps> = ({ className = '', ...props }) => (
+    <nav className={`${navBar} ${className}`} {...props} />
+);
 
 export default NavBar;

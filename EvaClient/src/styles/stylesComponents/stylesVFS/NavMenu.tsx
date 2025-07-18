@@ -1,23 +1,13 @@
-import styled, { CSSObject } from "styled-components";
-import { IOverrideProps } from "../../toolsStyle/type";
-import { useMergedOverrideStyles } from "../../hooksStyle/useMergedOverrideStyles";
+import { navMenu } from './NavMenu.css';
+import React from 'react';
 
-const baseNavMenuStyles: CSSObject = {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(3, 1fr)',
-    justifyItems: 'center',
-    alignItems: 'center',
-};
-
-export interface INavMenuProps extends IOverrideProps
+export interface INavMenuProps extends React.HTMLAttributes<HTMLElement>
 {
-    componentName?: string;
+    className?: string;
 }
-const NavMenu = styled.div <INavMenuProps>`
-${({ $overrideStyles, componentName = "container" }) =>
-    {
-        const merged = useMergedOverrideStyles(componentName, baseNavMenuStyles, $overrideStyles);
-        return merged;
-    }}`;
+
+const NavMenu: React.FC<INavMenuProps> = ({ className = '', ...props }) => (
+    <nav className={`${navMenu} ${className}`} {...props} />
+);
 
 export default NavMenu;

@@ -10,6 +10,5 @@ import SubFolders from "./stylesComponents/stylesVFS/SubFolders";
 import TreeItem from "./stylesComponents/stylesVFS/TreeItem";
 import ULTreeList from "./stylesComponents/stylesVFS/ULTreeList";
 
-
-export const VFSUI = { Container, Folders, SubFolders, NavEditor, NavMenu, NavViewProperty, ULTreeList, TreeItem, FolderLabel, FileLabel, SearchFile }
+export { Container, Folders, SubFolders, NavEditor, NavMenu, NavViewProperty, ULTreeList, TreeItem, FolderLabel, FileLabel, SearchFile };
 

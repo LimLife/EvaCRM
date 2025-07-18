@@ -1,20 +1,13 @@
-import styled, { CSSObject } from "styled-components";
-import { IOverrideProps } from "../../toolsStyle/type";
-import { useMergedOverrideStyles } from "../../hooksStyle/useMergedOverrideStyles";
+import { navEditor } from './NavEditor.css';
+import React from 'react';
 
-const baseNavEditorStyles: CSSObject = {
-    display: 'grid',
-};
-
-export interface INavEditorProps extends IOverrideProps
+export interface INavEditorProps extends React.HTMLAttributes<HTMLElement>
 {
-    componentName?: string;
+    className?: string;
 }
-const NavEditor = styled.div <INavEditorProps>`
-${({ $overrideStyles, componentName = "container" }) =>
-    {
-        const merged = useMergedOverrideStyles(componentName, baseNavEditorStyles, $overrideStyles);
-        return merged;
-    }}`;
+
+const NavEditor: React.FC<INavEditorProps> = ({ className = '', ...props }) => (
+    <nav className={`${navEditor} ${className}`} {...props} />
+);
 
 export default NavEditor;

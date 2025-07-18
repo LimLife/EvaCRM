@@ -1,29 +1,13 @@
-import styled, { CSSObject } from "styled-components";
-import { IOverrideProps } from "../toolsStyle/type";
-import { useStyledOverrides } from "../hooksStyle/useStyledOverrides";
+import { input } from './Input.css';
+import React from 'react';
 
-interface IInputStyles extends IOverrideProps
+interface IInputStyles extends React.InputHTMLAttributes<HTMLInputElement>
 {
-    nameComponent?: string;
+    className?: string;
 }
 
-const baseInput: CSSObject = {
-    border: 'none',
-    backgroundColor: 'transparent',
-    textAlign: 'center',
-    fontSize: '16px',
-    outline: 'none',
-    width: '100%'
-};
-
-const Input = styled.input<IInputStyles>`
-${({ $overrideStyles }) =>
-    {
-        return useStyledOverrides(baseInput, $overrideStyles);
-    }}
-     &::placeholder{
-            color: black
-        }  
-    `;
+const Input: React.FC<IInputStyles> = ({ className = '', ...props }) => (
+    <input className={`${input} ${className}`} {...props} />
+);
 
 export default Input;

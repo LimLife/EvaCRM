@@ -1,23 +1,13 @@
-import styled, { CSSObject } from "styled-components";
-import { IOverrideProps } from "../toolsStyle/type";
-import { useMergedOverrideStyles } from "../hooksStyle/useMergedOverrideStyles";
+import { container } from './Container.css';
+import React from 'react';
 
-const baseContainerStyles: CSSObject = {
-    display: 'flex',
-    position: "absolute",
-    flexDirection: 'column'
-};
-
-export interface IContainerProps extends IOverrideProps
+export interface IContainerProps extends React.HTMLAttributes<HTMLDivElement>
 {
-    componentName?: string;
+    className?: string;
 }
-export const ContainerStyle: Record<string, CSSObject> = { button: baseContainerStyles }
-const Container = styled.div <IContainerProps>`
-${({ $overrideStyles, componentName = "container" }) =>
-    {
-        const merged = useMergedOverrideStyles(componentName, baseContainerStyles, $overrideStyles);
-        return merged;
-    }}`;
+
+const Container: React.FC<IContainerProps> = ({ className = '', ...props }) => (
+    <div className={`${container} ${className}`} {...props} />
+);
 
 export default Container;

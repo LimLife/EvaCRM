@@ -1,21 +1,13 @@
-import styled, { CSSObject } from "styled-components";
-import { IOverrideProps } from "../toolsStyle/type";
-import { useMergedOverrideStyles } from "../hooksStyle/useMergedOverrideStyles";
+import { leftPanel } from './LeftPanel.css';
+import React from 'react';
 
-interface ILeftPanel extends IOverrideProps
+interface ILeftPanelProps extends React.HTMLAttributes<HTMLDivElement>
 {
-    nameComponent?: string;
+    className?: string;
 }
-const baseLeftPanel: CSSObject = {
-    height: '100%',
-};
 
-export const LeftPanelStyle: Record<string, CSSObject> = { button: baseLeftPanel }
-const LeftPanel = styled.div<ILeftPanel>`
-${({ $overrideStyles, nameComponent = "leftPanel" }) =>
-    {
-        const merged = useMergedOverrideStyles(nameComponent, baseLeftPanel, $overrideStyles);
-        return merged;
-    }}`;
+const LeftPanel: React.FC<ILeftPanelProps> = ({ className = '', ...props }) => (
+    <div className={`${leftPanel} ${className}`} {...props} />
+);
 
-export default LeftPanel
+export default LeftPanel;
